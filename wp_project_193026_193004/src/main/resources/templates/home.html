@@ -1,0 +1,122 @@
+<th:block xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+    <section class="jumbotron text-center">
+        <div class="container">
+            <h1 class="jumbotron-heading">Home </h1>
+            <h3 class="jumbotron-heading">Personalized view</h3>
+        </div>
+    </section>
+
+    <div class="container">
+
+        <div class="row m-3">
+            <div class="card" style="width: 100%">
+                <div class="card-header">
+                    Weather-based playlist for <span th:text="${city}">[city]</span>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush" th:each="song : ${weatherSongs}" >
+                        <li class="list-group-item"><a class="text-decoration-none" th:href="${song.getLink()}" th:text="${song.getName()}">[Song name]</a></li>
+                    </ul>
+                </div>
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col-10">
+                            <form class="form-inline" method="post" th:action="@{'/home/current-weather'}">
+                                <div class="form-group m-3">
+                                    <label for="city" class="sr-only">Insert city:</label>
+                                    <input type="text" name="city" id="city" class="form-control" placeholder="Insert city">
+                                </div>
+                                <button id="submit" type="submit" class="btn btn-dark">Refresh</button>
+                            </form>
+                        </div>
+                        <div class="col-2 align-right align-middle">
+                            <a href="/current-weather" class="justify-content-end bg-dark rounded-pill p-1 text-light text-decoration-none" th:text="${condition}">[condition]</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-3">
+                <div class="card">
+                    <div class="card-header">
+                        Favourite Songs
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush" th:each="song : ${likedSongs}" >
+                            <li class="list-group-item"><a class="text-decoration-none" th:href="${song.getLink()}" th:text="${song.getName()}">[Song name]</a></li>
+                        </ul>
+                    </div>
+                    <div class="card-footer">
+                        <a href="/songs" class="text-light bg-dark p-1 rounded-2 text-decoration-none">More</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="card">
+                    <div class="card-header">
+                        Favourite Albums
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush" th:each="album : ${likedAlbums}" >
+                            <li class="list-group-item" th:text="${album.getName()}">[Album name]</li>
+                        </ul>
+                    </div>
+                    <div class="card-footer">
+                        <a href="/albums" class="text-light bg-dark p-1 rounded-2 text-decoration-none">More</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="card">
+                    <div class="card-header">
+                        Favourite Artists
+                    </div>
+                        <div class="card-body">
+                            <ul class="list-group list-group-flush" th:each="artist : ${likedArtists}" >
+                                <li class="list-group-item" th:text="${artist.getName()}">[Artist name]</li>
+                            </ul>
+                        </div>
+                    <div class="card-footer">
+                        <a href="/artists" class="text-light bg-dark p-1 rounded-2 text-decoration-none">More</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="row card border-2 border-success rounded-3 mb-3">
+                    <div class="card-header bg-success text-light rounded-3 ">
+                        Status
+                    </div>
+                    <div class="card-body">
+                        <div class="progress mb-5">
+                            <div class="progress-bar bg-success" style="width: 23%">
+                                <span>23%</span>
+                            </div>
+                        </div>
+                        <p class="card-text">Time spent:</p>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item" th:text="${user.getTimeSpent()}">[time spent]</li>
+                            <li class="list-group-item">minutes</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="row card border-2 border-danger rounded-3 mb-3">
+                    <div class="card-header bg-danger text-light rounded-3 ">
+                        Support
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">Report a problem here.</p>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <a href="#" class="text-danger text-decoration-none">Report</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</th:block>

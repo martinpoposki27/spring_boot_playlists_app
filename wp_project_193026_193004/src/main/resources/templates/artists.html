@@ -1,0 +1,68 @@
+<th:block xmlns:th="http://www.thymeleaf.org">
+    <section class="jumbotron text-center">
+        <div class="container">
+            <h1 class="jumbotron-heading">Artists </h1>
+            <h3 class="jumbotron-heading">All artists</h3>
+        </div>
+    </section>
+
+    <div class="container mb-4">
+        <form th:action="@{/artists/search}" th:method="POST">
+            <div class="form-group">
+                <label for="search">Search artists:</label>
+                <input type="text" id="search" name="search" class="form-control">
+            </div>
+            <button id="submit" type="submit" class="btn btn-outline-dark">Search</button>
+        </form>
+    </div>
+
+    <div class="container mb-4">
+        <div class="row">
+            <div class="col-12" th:if="${artists.size() > 0}">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class="thead-light">
+                        <tr>
+                            <th scope="col">Artist name</th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="artist : ${artists}" class="song">
+                            <td th:text="${artist.getName()}"></td>
+                            <td>
+                                <form th:action="@{'/user/{id}/subscribe' (id=${artist.getId()})}" th:method="POST">
+                                    <button type="submit" class="delete-item btn btn-primary" th:text="${user.ifSubscribed(artist)} ? 'Unsubscribe' : 'Subscribe'">Subscribe</button>
+                                </form>
+                            </td>
+                            <td>
+                                <form th:action="@{'/songs/{id}/artist' (id=${artist.getId()})}" th:method="POST">
+                                    <button type="submit" class="edit-item btn btn-success">Tracks</button>
+                                </form>
+                            </td>
+                            <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+                                <td>
+                                    <form th:action="@{'/artists/{id}/delete' (id=${artist.getId()})}" th:method="POST">
+                                        <button type="submit" class="delete-item btn btn-danger">Delete</button>
+                                    </form>
+                                    <a th:href="@{'/artists/{id}/edit-form' (id=${artist.getId()})}" class="edit-item btn btn-warning">Edit</a>
+                                </td>
+                            </th:block>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col mb-3">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12" sec:authorize="hasRole('ROLE_ADMIN')">
+                        <a href="/artists/add-form" class="btn btn-block btn-dark add-product-btn">
+                            Add new artist
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>

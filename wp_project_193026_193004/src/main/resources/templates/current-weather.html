@@ -1,0 +1,18 @@
+<th:block xmlns:th="http://www.thymeleaf.org">
+    <section class="jumbotron text-center">
+        <div class="container">
+            <h1 class="jumbotron-heading">Weather</h1>
+        </div>
+    </section>
+
+    <div class="container">
+        <h3>Current Conditions</h3>
+        <p th:text="${currentWeather.description}">Description</p>
+        <h3>Temperature</h3>
+        <p th:text="${currentWeather.temperature} + C">Temperature</p>
+        <h3>Feels Like</h3>
+        <p th:text="${currentWeather.feelsLike} + C">Feels Like</p>
+        <h3>Wind Speed</h3>
+        <p th:text="${currentWeather.windSpeed} + kph"></p>
+    </div>
+</th:block>

@@ -1,0 +1,79 @@
+<th:block xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+    <section class="jumbotron text-center">
+        <div class="container">
+            <h1 class="jumbotron-heading">Songs </h1>
+            <h3 class="jumbotron-heading">All songs</h3>
+        </div>
+    </section>
+
+    <div class="container mb-4">
+        <form th:action="@{/songs/search}" th:method="POST">
+            <div class="form-group">
+                <label for="search">Search songs:</label>
+                <input type="text" id="search" name="search" class="form-control">
+            </div>
+            <button id="submit" type="submit" class="btn btn-outline-dark">Search</button>
+        </form>
+    </div>
+
+    <div class="container mb-4">
+        <div class="row">
+            <div class="col-12" th:if="${songs.size() > 0}">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class="thead-light">
+                        <tr>
+                            <th scope="col">Song name</th>
+                            <th scope="col">Duration</th>
+                            <th scope="col">Artist</th>
+                            <th scope="col">Album</th>
+                            <th scope="col">Genre</th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="song : ${songs}" class="song">
+                            <td th:text="${song.getName()}"></td>
+                            <td th:text="${song.getInMinutes()}"></td>
+                            <td th:text="${song.getArtist() != null}
+                            ? ${song.getArtist().getName()} : 'No Artist'"></td>
+                            <td th:text="${song.getAlbum() != null}
+                            ? ${song.getAlbum().getName()} : 'No Album'"></td>
+                            <td th:text="${song.getGenre()}"></td>
+                            <td>
+                                <form th:action="@{'/user/{id}/like' (id=${song.getId()})}" th:method="POST">
+                                    <button type="submit" class="delete-item btn btn-primary" th:text="${user.ifLiked(song)} ? 'Unlike' : 'Like'">Like</button>
+                                </form>
+                            </td>
+                            <td>
+                                <form th:action="@{'/user/{id}/play' (id=${song.getId()})}" th:method="POST">
+                                    <button type="submit" class="btn btn-success">Play</button>
+                                </form>
+                            </td>
+                            <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+                                <td>
+                                    <form th:action="@{'/songs/{id}/delete' (id=${song.getId()})}" th:method="POST">
+                                        <button type="submit" class="delete-item btn btn-danger">Delete</button>
+                                    </form>
+                                    <a th:href="@{'/songs/{id}/edit-form' (id=${song.getId()})}" class="edit-item btn btn-warning">Edit</a>
+                                </td>
+                            </th:block>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col mb-3">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12" sec:authorize="hasRole('ROLE_ADMIN')">
+                        <a href="/songs/add-form" class="btn btn-block btn-dark add-product-btn">
+                            Add new song
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
