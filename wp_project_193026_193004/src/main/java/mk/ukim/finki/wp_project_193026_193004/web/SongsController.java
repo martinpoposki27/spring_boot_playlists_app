@@ -150,24 +150,30 @@ public class SongsController {
     }
 
     @PostMapping("/{id}/album")
-    public String getSongsOfAlbum(@RequestParam(required = false) String error, @PathVariable Long id, Model model) {
+    public String getSongsOfAlbum(@RequestParam(required = false) String error, @PathVariable Long id, Model model, HttpServletRequest request) {
         albumService.findById(id);
         if (error != null && !error.isEmpty()) {
             model.addAttribute("hasError", true);
             model.addAttribute("error", error);
         }
+        String username = request.getUserPrincipal().getName();
+        User user = userService.findByUsername(username);
+        model.addAttribute("user", user);
         model.addAttribute("songs", songService.findAllByAlbum(id));
         model.addAttribute("bodyContent", "songs");
         return "master-template";
     }
 
     @PostMapping("/{id}/artist")
-    public String getSongsByArist(@RequestParam(required = false) String error, @PathVariable Long id, Model model) {
+    public String getSongsByArist(@RequestParam(required = false) String error, @PathVariable Long id, Model model, HttpServletRequest request) {
         artistService.findById(id);
         if (error != null && !error.isEmpty()) {
             model.addAttribute("hasError", true);
             model.addAttribute("error", error);
         }
+        String username = request.getUserPrincipal().getName();
+        User user = userService.findByUsername(username);
+        model.addAttribute("user", user);
         model.addAttribute("songs", songService.findAllByArtist(id));
         model.addAttribute("bodyContent", "songs");
         return "master-template";
