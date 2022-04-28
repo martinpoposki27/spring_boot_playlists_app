@@ -1,0 +1,9 @@
+Покрај технологиите кои ги изулувавме на предметот Веб програмирање како што се:
+Spring Boot - java web framework
+Thymeleaf - server side java template engine
+PostgreSQL - database system
+Во оваа апликација дополнително искористив и неколку нови технологии како на пример:
+Повик до надворешно API со помош на RestTemplate од Spring Framework. RestTemplate е дел од Spring наменет за пристап до клиентски HTTP. Начинот на кој што
+работи е сличен на JdbcTemplate. За да го добијам JSON објектот од openweather.com, користев URI Template, кој исто така е дел од Spring рамката.
+JSON објектот го претворив во објект со помош на object mapper од jackson.
+
