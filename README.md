@@ -1,4 +1,4 @@
-# wp_project_193004_193026
+# Playlists App
 
 The music playlist web app that I developed is an innovative application that changes the music playlists based on the weather outside. This app was built using the Spring Boot framework, which is a popular Java web framework that simplifies the process of building enterprise-grade applications. In addition, I used Thymeleaf, which is a server-side Java template engine that simplifies the process of creating dynamic web pages.
 
